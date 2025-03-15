@@ -8,7 +8,7 @@ public class BlogController {
     @GetMapping("/")
     public String welcome(Model model){
         model.addAttribute("message", "Hello World!");
-        model.addAttribute("message2", "2!");
+        model.addAttribute("message2", "3!");
         return "home";
     }
 }
