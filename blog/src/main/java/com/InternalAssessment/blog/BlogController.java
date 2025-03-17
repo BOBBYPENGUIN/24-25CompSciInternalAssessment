@@ -21,4 +21,14 @@ public class BlogController {
         model.addAttribute("messages", messages);
         return "allMessages";
     }
+    @GetMapping("/message/{id}")
+    public String getSingleMessage(Model model, @PathVariable String id){
+        try {
+            Message message = Util.getMessage(id);
+            model.addAttribute("message", message);
+        } catch (RuntimeException e){
+            model.addAttribute("error", e.getMessage());
+        }
+        return "item";
+    }
 }

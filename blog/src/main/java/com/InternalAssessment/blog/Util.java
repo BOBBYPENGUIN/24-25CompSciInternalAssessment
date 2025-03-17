@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.InternalAssessment.blog.Messages.Message;
@@ -46,5 +47,15 @@ public class Util {
         List<Message> messages = new ArrayList<>();
         loadMessages(messages);
         return messages;
+    }
+    public static Message getMessage(String id){
+        long lid = getId(id);
+        List<Message> messages = new ArrayList<>();
+        loadMessages(messages);
+        Optional<Message> message = messages.stream().filter(m -> m.getId() == lid).findFirst();
+        if(message.isPresent()){
+            return message.get();
+        }
+        throw new RuntimeException("Error Could not find");
     }
 }

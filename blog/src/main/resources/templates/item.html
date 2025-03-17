@@ -7,8 +7,9 @@
 <body>
     <div>
         <div th:if="${message != null}">
-            <h1><div th:text="${message.title}"></div></h1>
-            <div th:text="${message.content}"></div>
+            <div th:text="${message.getDate()}"></div>
+            <h1><div th:text="${message.getTitle()}"></div></h1>
+            <div th:text="${message.getContent()}"></div>
         </div>
         <div th:unless="${person == null}">
             <h1><div>Error</div></h1>
@@ -16,15 +17,9 @@
         <div th:if="${error != null}">
             <div th:text="${error}"></div>
         </div>
-        <div th:unless="${error == null}">
-            <h1><div th:text="${person.firstName}"></div></h1>
-            <h1><div th:text="${person.lastName}"></div></h1>
-            <h1><div th:text="${person.age}"></div></h1>
-            <h1><div th:text="${person.height}"></div></h1>
-        </div>
 
     </div>
-    <div>
+    <!--<div>
         <form th:action="@{/sendMessage}" th:object="${message}" method="post">
             <div>
                 <label>Title</label>
@@ -38,6 +33,6 @@
             </div>
             <button type="submit">Add User</button>
         </form>
-    </div>
+    </div>-->
 </body>
 </html>

@@ -27,5 +27,11 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
+    public String toCsv(){
+        return String.format("%s,%s,%s", Util.padId(id), title, content);
+    }
+    public String getDate(){
+        return Util.getDateTime(id);
+    }
     
 }
