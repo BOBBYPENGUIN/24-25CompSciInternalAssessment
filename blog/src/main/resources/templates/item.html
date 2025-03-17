@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Website2</title>
+</head>
+<body>
+    <div>
+        <div th:if="${message != null}">
+            <h1><div th:text="${message.title}"></div></h1>
+            <div th:text="${message.content}"></div>
+        </div>
+        <div th:unless="${person == null}">
+            <h1><div>Error</div></h1>
+        </div>
+        <div th:if="${error != null}">
+            <div th:text="${error}"></div>
+        </div>
+        <div th:unless="${error == null}">
+            <h1><div th:text="${person.firstName}"></div></h1>
+            <h1><div th:text="${person.lastName}"></div></h1>
+            <h1><div th:text="${person.age}"></div></h1>
+            <h1><div th:text="${person.height}"></div></h1>
+        </div>
+
+    </div>
+    <div>
+        <form th:action="@{/sendMessage}" th:object="${message}" method="post">
+            <div>
+                <label>Title</label>
+                <input type="text" th:field="*{title}">
+            </div>
+            <div>
+                <label>message</label>
+                <input type="text" th:field="*{message}">
+            </div>
+
+            </div>
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+</body>
+</html>
