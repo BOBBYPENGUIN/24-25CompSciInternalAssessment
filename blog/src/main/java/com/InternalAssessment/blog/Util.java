@@ -1,6 +1,8 @@
 package com.InternalAssessment.blog;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +12,6 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.InternalAssessment.blog.Messages.Message;
-import com.InternalAssessment.blog.People.Person;
 
 public class Util {
     public static long dateToMilliseconds(int year, int month, int day){
@@ -36,7 +37,7 @@ public class Util {
             while(in.hasNextLine()){
                 String line = in.nextLine();
                 String fields[] = line.split(",");
-                messages.add(new Message(Long.parseLong(fields[0]), fields[1], fields[2]));
+                messages.add(new Message(Long.parseLong(fields[0]), Long.parseLong(fields[1]), fields[2], fields[3]));
 
             }
         } catch (FileNotFoundException e) {
@@ -57,5 +58,19 @@ public class Util {
             return message.get();
         }
         throw new RuntimeException("Error Could not find");
+    }
+    public static Message saveMessage(Message message){
+        List<Message> messages = new ArrayList<>();
+        loadMessages(messages);
+        messages.add(message);
+
+        try(PrintWriter out = new PrintWriter(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
+            for(var m : messages){
+                out.println(m.toCsv());
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return message;
     }
 }

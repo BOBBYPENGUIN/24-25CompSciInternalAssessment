@@ -23,12 +23,28 @@ public class BlogController {
     }
     @GetMapping("/message/{id}")
     public String getSingleMessage(Model model, @PathVariable String id){
+        Message message = Util.getMessage(id);
         try {
-            Message message = Util.getMessage(id);
             model.addAttribute("message", message);
         } catch (RuntimeException e){
             model.addAttribute("error", e.getMessage());
         }
+        Message getMessage = new Message();
+        getMessage.setId(System.currentTimeMillis());
+        getMessage.setParent(message.getId());
+        model.addAttribute("getMessage", getMessage);
         return "item";
+    }
+    @GetMapping("/newmessage")
+    public String addPerson(Model model){
+        Message message = new Message();
+        model.addAttribute("message", message);
+        return "newmessage";
+    }
+    @PostMapping("/sendMessage")
+    public String getMessage(Model model, Message message){
+        System.out.println(message.toCsv());
+        Util.saveMessage(message);
+        return "home";
     }
 }

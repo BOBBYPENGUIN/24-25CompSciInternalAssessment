@@ -2,12 +2,20 @@ package com.InternalAssessment.blog.Messages;
 import com.InternalAssessment.blog.Util;
 public class Message {
     protected long id;
+    protected long parent;
     protected String title;
     protected String content;
-    public Message(long id, String title, String content) {
+    public Message(long id, long parent, String title, String content) {
         this.id = id;
+        this.parent = parent;
         this.title = title;
         this.content = content;
+    }
+    public Message() {
+        //TODO Auto-generated constructor stub
+    }
+    public Message getMessage(){
+        return this;
     }
     public long getId() {
         return id;
@@ -28,10 +36,17 @@ public class Message {
         this.content = content;
     }
     public String toCsv(){
-        return String.format("%s,%s,%s", Util.padId(id), title, content);
+        return String.format("%s,%s,%s,%s", Util.padId(id), Util.padId(parent), title, content);
     }
     public String getDate(){
         return Util.getDateTime(id);
     }
+    public long getParent() {
+        return parent;
+    }
+    public void setParent(long parent) {
+        this.parent = parent;
+    }
+
     
 }

@@ -8,6 +8,7 @@
     <div>
         <div th:if="${message != null}">
             <div th:text="${message.getDate()}"></div>
+            <div th:text="${message.getId()}"></div>
             <h1><div th:text="${message.getTitle()}"></div></h1>
             <div th:text="${message.getContent()}"></div>
         </div>
@@ -19,20 +20,23 @@
         </div>
 
     </div>
-    <!--<div>
-        <form th:action="@{/sendMessage}" th:object="${message}" method="post">
+    <div>
+        <form th:action="@{/sendMessage}" th:object="${getMessage}" method="post">
             <div>
                 <label>Title</label>
-                <input type="text" th:field="*{title}">
+                <input type="text" th:field="${getMessage.title}">
             </div>
             <div>
                 <label>message</label>
-                <input type="text" th:field="*{message}">
+                <input type="text" th:field="*{content}">
             </div>
-
+            <div>
+                <input type="hidden" th:field="*{parent}">
+                <input type="hidden" th:field="*{id}">
             </div>
-            <button type="submit">Add User</button>
+            <div th:text="${message.getId()}"></div>
+            <button type="submit">Post Message</button>
         </form>
-    </div>-->
+    </div>
 </body>
 </html>
