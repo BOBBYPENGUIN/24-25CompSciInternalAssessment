@@ -14,6 +14,7 @@ import java.util.Scanner;
 import com.InternalAssessment.blog.Messages.Message;
 
 public class Util {
+    static List<Message> messages = new ArrayList<>();
     public static long dateToMilliseconds(int year, int month, int day){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
@@ -32,7 +33,7 @@ public class Util {
         Date resultdate = new Date(id);  
         return sdf.format(resultdate); 
     }
-    public static void loadMessages(List<Message> messages) {
+    public static void loadMessages() {
         try(Scanner in = new Scanner(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             while(in.hasNextLine()){
                 String line = in.nextLine();
@@ -45,14 +46,13 @@ public class Util {
         }
     }
     public static List<Message> getMessages(){
-        List<Message> messages = new ArrayList<>();
-        loadMessages(messages);
+        if(messages.size() == 0){
+            loadMessages();
+        }
         return messages;
     }
     public static Message getMessage(String id){
         long lid = getId(id);
-        List<Message> messages = new ArrayList<>();
-        loadMessages(messages);
         Optional<Message> message = messages.stream().filter(m -> m.getId() == lid).findFirst();
         if(message.isPresent()){
             return message.get();
@@ -60,10 +60,7 @@ public class Util {
         throw new RuntimeException("Error Could not find");
     }
     public static Message saveMessage(Message message){
-        List<Message> messages = new ArrayList<>();
-        loadMessages(messages);
         messages.add(message);
-
         try(PrintWriter out = new PrintWriter(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             for(var m : messages){
                 out.println(m.toCsv());
@@ -71,6 +68,7 @@ public class Util {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        loadMessages();
         return message;
     }
 }
