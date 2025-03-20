@@ -1,6 +1,7 @@
 package com.InternalAssessment.blog;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -10,22 +11,35 @@ import com.InternalAssessment.blog.Messages.*;
  */
 public class MessageTreeNode {
     private Message message;
-    private ArrayList<MessageTreeNode> children;
+    private ArrayList<MessageTreeNode> children =new ArrayList<>();
     public MessageTreeNode(Message message){
         this.message = message;
     }
     public MessageTreeNode findMessageBFS(long id){
-        Queue<MessageTreeNode> mainQueue = new PriorityQueue<>();
+        Queue<MessageTreeNode> mainQueue = new LinkedList<>();
         mainQueue.add(this);
         while(mainQueue.peek() != null){
             MessageTreeNode curNode = mainQueue.poll();
             if(curNode.getMessage().getId() == id){
                 return curNode;
             }
+            for(MessageTreeNode childNode : curNode.children){
+                mainQueue.add(childNode);
+            }
         }
         return null;
     }
+    public void addNode(Message otherMessage){
+        MessageTreeNode parent = findMessageBFS(otherMessage.getParent());
+        parent.addChild(new MessageTreeNode(otherMessage));
+    }
+    public void addChild(MessageTreeNode child){
+        children.add(child);
+    }
     public Message getMessage(){
         return message;
+    }
+    public ArrayList<MessageTreeNode> getChildren(){
+        return children;
     }
 }
