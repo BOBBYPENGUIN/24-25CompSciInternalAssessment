@@ -2,6 +2,7 @@ package com.InternalAssessment.blog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.InternalAssessment.blog.Messages.Message;
 import com.InternalAssessment.blog.People.Person;
@@ -23,9 +24,12 @@ public class BlogController {
     }
     @GetMapping("/message/{id}")
     public String getSingleMessage(Model model, @PathVariable String id){
-        Message message = Util.getMessage(id);
+        MessageTreeNode tree = Util.getTree().findMessageBFS(Util.getId(id));
+        List<MessageTreeNode> children = tree.getChildren();
+        Message message = tree.getMessage();
         try {
             model.addAttribute("message", message);
+            model.addAttribute("children", children);
         } catch (RuntimeException e){
             model.addAttribute("error", e.getMessage());
         }
@@ -42,9 +46,9 @@ public class BlogController {
         return "newmessage";
     }
     @PostMapping("/sendMessage")
-    public String getMessage(Model model, Message message){
+    public RedirectView getMessage(Model model, Message message){
         System.out.println(message.toCsv());
         Util.saveMessage(message);
-        return "home";
+        return new RedirectView("/message/" + message.getId());
     }
 }

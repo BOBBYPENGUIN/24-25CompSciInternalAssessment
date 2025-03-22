@@ -62,6 +62,7 @@ public class Util {
     }
     public static Message saveMessage(Message message){
         messages.add(message);
+        tree.addNode(message);
         try(PrintWriter out = new PrintWriter(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             for(var m : messages){
                 out.println(m.toCsv());
