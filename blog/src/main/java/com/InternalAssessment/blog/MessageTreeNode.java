@@ -32,7 +32,7 @@ public class MessageTreeNode {
         MessageTreeNode parent = findMessageBFS(otherMessage.getParent());
         parent.addChild(new MessageTreeNode(otherMessage));
     }
-    public void addChild(MessageTreeNode child){
+    private void addChild(MessageTreeNode child){
         children.add(child);
     }
     public Message getMessage(){
