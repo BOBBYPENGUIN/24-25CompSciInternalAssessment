@@ -14,7 +14,8 @@ import java.util.Scanner;
 import com.InternalAssessment.blog.Messages.Message;
 
 public class Util {
-    static List<Message> messages = new ArrayList<>();
+    private static List<Message> messages = new ArrayList<>();
+    private static MessageTreeNode tree;
     public static long dateToMilliseconds(int year, int month, int day){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
@@ -70,5 +71,18 @@ public class Util {
         }
         loadMessages();
         return message;
+    }
+    public static void buildTree(){
+        getMessages();
+        tree = new MessageTreeNode(messages.get(0));
+        for(int i = 1; i < messages.size(); i++){
+            tree.addNode(messages.get(i));
+        }
+    }
+    public static MessageTreeNode getTree(){
+        if(tree == null){
+            buildTree();
+        }
+        return tree;
     }
 }
