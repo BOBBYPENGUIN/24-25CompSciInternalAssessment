@@ -34,6 +34,9 @@ public class Util {
         Date resultdate = new Date(id);  
         return sdf.format(resultdate); 
     }
+    /**
+     * This method parses a CSV file, a format which is necessary for long-term data storage
+     */
     public static void loadMessages() {
         try(Scanner in = new Scanner(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             while(in.hasNextLine()){

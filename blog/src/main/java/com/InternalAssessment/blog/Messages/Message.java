@@ -1,5 +1,8 @@
 package com.InternalAssessment.blog.Messages;
 import com.InternalAssessment.blog.Util;
+/**
+ * Implements a message framework. This serves as a hierarchical composite data structure by allowing multiple values to be stored inside a single class. The parent, in this case, is stored as the ID of the parent. This makes the record easier to understand without loss of data._
+ */
 public class Message {
     protected long id;
     protected long parent;

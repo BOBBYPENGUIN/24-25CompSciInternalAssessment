@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.InternalAssessment.blog.Messages.Message;
-import com.InternalAssessment.blog.People.Person;
 
 import java.util.List;
+/**
+ * This is the controller for SpringBoot, the external library used to display my project
+ */
 @Controller
 public class BlogController {
     @GetMapping("/")
