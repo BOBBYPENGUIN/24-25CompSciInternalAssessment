@@ -3,6 +3,7 @@ package com.InternalAssessment.blog;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 import com.InternalAssessment.blog.Messages.*;
 /**
@@ -24,6 +25,20 @@ public class MessageTreeNode {
             }
             for(MessageTreeNode childNode : curNode.children){
                 mainQueue.add(childNode);
+            }
+        }
+        return null;
+    }
+    public MessageTreeNode findMessageDFS(long id){
+        Stack<MessageTreeNode> mainQueue = new Stack<>();
+        mainQueue.add(this);
+        while(mainQueue.peek() != null){
+            MessageTreeNode curNode = mainQueue.pop();
+            if(curNode.getMessage().getId() == id){
+                return curNode;
+            }
+            for(MessageTreeNode childNode : curNode.children){
+                mainQueue.push(childNode);
             }
         }
         return null;

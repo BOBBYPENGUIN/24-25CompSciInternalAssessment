@@ -25,6 +25,9 @@ public class BlogController {
     @GetMapping("/message/{id}")
     public String getSingleMessage(Model model, @PathVariable String id){
         MessageTreeNode tree = Util.getTree().findMessageBFS(Util.getId(id));
+        if(tree == null){
+            return "error";
+        }
         List<MessageTreeNode> children = tree.getChildren();
         Message message = tree.getMessage();
         try {
