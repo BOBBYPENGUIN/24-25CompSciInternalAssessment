@@ -38,8 +38,8 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
-    public String toCsv(){
-        return String.format("%s,%s,%s,%s", Util.padId(id), Util.padId(parent), title, content);
+    public String toCsv(String deliminator){
+        return String.format("%s%s%s%s%s%s%s", Util.padId(id), deliminator, Util.padId(parent), deliminator, title, deliminator, content);
     }
     public String getDate(){
         return Util.getDateTime(id);

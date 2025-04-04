@@ -41,7 +41,7 @@ public class Util {
         try(Scanner in = new Scanner(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             while(in.hasNextLine()){
                 String line = in.nextLine();
-                String fields[] = line.split(",");
+                String fields[] = line.split("—ƒ—");
                 messages.add(new Message(Long.parseLong(fields[0]), Long.parseLong(fields[1]), fields[2], fields[3]));
 
             }
@@ -68,7 +68,7 @@ public class Util {
         tree.addNode(message);
         try(PrintWriter out = new PrintWriter(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             for(var m : messages){
-                out.println(m.toCsv());
+                out.println(m.toCsv("—ƒ—"));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

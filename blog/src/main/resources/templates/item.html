@@ -24,11 +24,13 @@
     <table>
         <thead>
             <td>Title</td>
+            <td>Date</td>
             <td>Content</td>
         </thead>
         <th:block th:each="child : ${children}">
             <tr>
                 <td><a th:href="@{'/message/' + ${child.getMessage().getId()}}" th:text="${child.getMessage().getTitle()}"></a></td>
+                <td th:text="${child.getMessage().getDate()}"></td>
                 <td th:text="${child.getMessage().getContent()}"></td>
             </tr>
         </th:block>
@@ -41,7 +43,7 @@
             </div>
             <div>
                 <label>message</label>
-                <input type="text" th:field="*{content}">
+                <textarea type="text" th:field="*{content}"></textarea> 
             </div>
             <div>
                 <input type="hidden" th:field="*{parent}">

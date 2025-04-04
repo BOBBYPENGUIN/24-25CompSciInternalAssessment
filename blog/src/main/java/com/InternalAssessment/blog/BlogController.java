@@ -54,7 +54,7 @@ public class BlogController {
     }
     @PostMapping("/sendMessage")
     public RedirectView getMessage(Model model, Message message){
-        System.out.println(message.toCsv());
+        System.out.println(message.toCsv("—ƒ—"));
         Util.saveMessage(message);
         return new RedirectView("/message/" + message.getId());
     }
