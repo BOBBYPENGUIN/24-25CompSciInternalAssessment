@@ -5,10 +5,10 @@
     <title>My Website2</title>
 </head>
 <body>
-    <div>
+    <span id="MainMessageContent">
         <div th:if="${message != null}">
-            <div th:text="${message.getDate()}"></div>
-            <div><a th:href="@{'/message/' + ${message.getParent()}}" th:text="${message.getParent()}"></a></div>
+            <span>Date posted: </span><span th:text="${message.getDate()}"></span>
+            <div><a th:href="@{'/message/' + ${message.getParent()}}" th:text="${parent.getTitle()}"></a></div>
             <h1><div th:text="${message.getTitle()}"></div></h1>
             <div th:text="${message.getContent()}"></div>
         </div>
@@ -19,20 +19,16 @@
             <div th:text="${error}"></div>
         </div>
 
-    </div>
+    </span>
     <p><br><br><br></p>
     <table>
         <thead>
-            <td>ID</td>
-            <td>Parent</td>
             <td>Title</td>
             <td>Content</td>
         </thead>
         <th:block th:each="child : ${children}">
             <tr>
-                <td><a th:href="@{'/message/' + ${child.getMessage().getId()}}" th:text="${child.getMessage().getId()}"></a></td>
-                <td><a th:href="@{'/message/' + ${child.getMessage().getParent()}}" th:text="${child.getMessage().getParent()}"></a></td>
-                <td th:text="${child.getMessage().getTitle()}"></td>
+                <td><a th:href="@{'/message/' + ${child.getMessage().getId()}}" th:text="${child.getMessage().getTitle()}"></a></td>
                 <td th:text="${child.getMessage().getContent()}"></td>
             </tr>
         </th:block>
