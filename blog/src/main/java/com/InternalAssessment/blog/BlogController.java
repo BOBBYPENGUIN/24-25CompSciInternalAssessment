@@ -16,7 +16,7 @@ public class BlogController {
     public String welcome(Model model){
         model.addAttribute("message", "Hello World!");
         model.addAttribute("message2", "3!");
-        return "home";
+        return "index";
     }
     @GetMapping("/all")
     public String getPersons(Model model){
@@ -32,9 +32,11 @@ public class BlogController {
         }
         List<MessageTreeNode> children = tree.getChildren();
         Message message = tree.getMessage();
+        Message parent = Util.getTree().findMessageBFS(message.getParent()).getMessage();
         try {
             model.addAttribute("message", message);
             model.addAttribute("children", children);
+            model.addAttribute("parent", parent);
         } catch (RuntimeException e){
             model.addAttribute("error", e.getMessage());
         }
