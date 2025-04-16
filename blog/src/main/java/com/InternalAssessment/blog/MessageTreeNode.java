@@ -52,6 +52,21 @@ public class MessageTreeNode {
         }
         return null;
     }
+    public MessageTreeNode findMessageRecursive(long id, MessageTreeNode curMessage){
+        //Uses Depth First Search to recursively locate the message.
+        if(curMessage.getMessage().getId() == id){
+            return curMessage;
+        }
+        else {
+            for(var i : curMessage.getChildren()){
+                var temp = findMessageRecursive(id, i);
+                if(temp != null){
+                    return temp;
+                }
+            }
+        }
+        return null;
+    }
     public void addNode(Message otherMessage){
         MessageTreeNode parent = findMessageBFS(otherMessage.getParent());
         parent.addChild(new MessageTreeNode(otherMessage));

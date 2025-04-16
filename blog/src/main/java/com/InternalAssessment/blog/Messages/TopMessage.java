@@ -6,5 +6,8 @@ public class TopMessage extends Message{
     public TopMessage(long id, String title, String content){
         super(id, 0, title, content);
     }
+    public void forceMessage(){
+        this.setTitle("TOP: " + this.getTitle());
+    }
     
 }

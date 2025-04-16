@@ -2,6 +2,8 @@ package com.InternalAssessment.blog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +18,13 @@ import com.InternalAssessment.blog.Messages.Message;
 public class Util {
     private static List<Message> messages = new ArrayList<>();
     private static MessageTreeNode tree;
+    /**
+     * A part of processing the data. The ID is stored as the current time, in milliseconds, that the message was created, and must be connected between the two
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
     public static long dateToMilliseconds(int year, int month, int day){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
@@ -31,13 +40,14 @@ public class Util {
     }
     public static String getDateTime(long id){
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");    
-        Date resultdate = new Date(id);  
+        Date resultdate = new Date(id-200000000);  
         return sdf.format(resultdate); 
     }
     /**
      * This method parses a CSV file, a format which is necessary for long-term data storage
      */
     public static void loadMessages() {
+        messages = new ArrayList<Message>();
         try(Scanner in = new Scanner(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             while(in.hasNextLine()){
                 String line = in.nextLine();
@@ -69,6 +79,7 @@ public class Util {
         try(PrintWriter out = new PrintWriter(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
             for(var m : messages){
                 out.println(m.toCsv("—ƒ—"));
+                System.out.println(m.toCsv(","));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
