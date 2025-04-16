@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Website2</title>
+</head>
+<body>
+    <span id="MainMessageContent">
+        <div th:if="${message != null}">
+            <span>Date posted: </span><span th:text="${message.getDate()}"></span>
+            <div><a th:href="@{'/message/' + ${message.getParent()}}" th:text="${parent.getTitle()}"></a></div>
+            <h1><div th:text="${message.getTitle()}"></div></h1>
+            <div th:text="${message.getContent()}"></div>
+        </div>
+        <div th:unless="${person == null}">
+            <h1><div>Error</div></h1>
+        </div>
+        <div th:if="${error != null}">
+            <div th:text="${error}"></div>
+        </div>
+
+    </span>
+    <p><br><br><br></p>
+    <table>
+        <thead>
+            <td>Title</td>
+            <td>Date</td>
+            <td>Content</td>
+        </thead>
+        <th:block th:each="child : ${children}">
+            <tr>
+                <td><a th:href="@{'/message/' + ${child.getMessage().getId()}}" th:text="${child.getMessage().getTitle()}"></a></td>
+                <td th:text="${child.getMessage().getDate()}"></td>
+                <td th:text="${child.getMessage().getContent()}"></td>
+            </tr>
+        </th:block>
+    </table>
+    <div>
+        <form th:action="@{/sendMessage}" th:object="${getMessage}" method="post">
+            <div>
+                <label>Title</label>
+                <input type="text" th:field="${getMessage.title}">
+            </div>
+            <div>
+                <label>message</label>
+                <textarea type="text" th:field="*{content}"></textarea> 
+            </div>
+            <div>
+                <input type="hidden" th:field="*{parent}">
+                <input type="hidden" th:field="*{id}">
+            </div>
+            <button type="submit">Post Message</button>
+        </form>
+    </div>
+</body>
+</html>
