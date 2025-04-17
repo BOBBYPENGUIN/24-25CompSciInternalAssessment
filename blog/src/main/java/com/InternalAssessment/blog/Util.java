@@ -1,10 +1,6 @@
 package com.InternalAssessment.blog;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +10,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import com.InternalAssessment.blog.Messages.Message;
+import org.springframework.core.io.ClassPathResource;
 
 public class Util {
     private static List<Message> messages = new ArrayList<>();
@@ -48,14 +45,19 @@ public class Util {
      */
     public static void loadMessages() {
         messages = new ArrayList<Message>();
-        try(Scanner in = new Scanner(new File("blog\\src\\main\\resources\\data\\messages.csv"))) {
-            while(in.hasNextLine()){
-                String line = in.nextLine();
-                String fields[] = line.split("—ƒ—");
-                messages.add(new Message(Long.parseLong(fields[0]), Long.parseLong(fields[1]), fields[2], fields[3]));
+        try {
+            // Use ClassPathResource instead of direct File access
+            ClassPathResource resource = new ClassPathResource("data/messages.csv");
+            InputStream inputStream = resource.getInputStream();
 
+            try (Scanner in = new Scanner(inputStream)) {
+                while (in.hasNextLine()) {
+                    String line = in.nextLine();
+                    String fields[] = line.split("—ƒ—");
+                    messages.add(new Message(Long.parseLong(fields[0]), Long.parseLong(fields[1]), fields[2], fields[3]));
+                }
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
